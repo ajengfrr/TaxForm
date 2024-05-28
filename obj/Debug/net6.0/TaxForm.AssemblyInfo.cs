@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("TaxForm")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+cc8c10b43799645f45ba471a5a6188a5389645a7")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c27133a05909b498fd4036b3015e4e23cfd57253")]
 [assembly: System.Reflection.AssemblyProductAttribute("TaxForm")]
 [assembly: System.Reflection.AssemblyTitleAttribute("TaxForm")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
