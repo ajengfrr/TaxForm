@@ -1,0 +1,182 @@
+﻿@model IEnumerable<TaxForm.Models.TrTax>
+
+@{
+    ViewData["Title"] = "Export to Excel";
+}
+
+<div class="container">
+    <asp:Panel ID="inputPanel" runat="server">
+        <fieldset>
+            <div class="row mt-lg-3">
+                <div class="col-5">
+                    <a class="btn btn-outline-secondary" asp-area="" asp-controller="TrTaxes" asp-action="Index">
+                        <i class="bi bi-arrow-left-circle"></i> Back
+                    </a>
+                </div>
+                <div class="col-4">
+                    <span>
+                        <b style="font-size:25px">
+                            Export to Excel
+                        </b>
+                    </span>
+                </div>
+            </div>
+        </fieldset>
+    </asp:Panel>
+    <hr />
+    <asp:Panel ID="inputPanel" runat="server">
+        <fieldset>
+            <div class="row mt-lg-3">
+                <div class="col-8">
+                    <button class="btn btn-outline-secondary" disabled>@Model.Count()</button><button class="btn bg-secondary" disabled style="color:white">Total Data</button>
+                </div>
+            </div>
+
+        </fieldset>
+    </asp:Panel>
+    <form asp-action="ViewExportExcel" asp-controller="TrTaxes">
+        <div class="row mt-lg-5">
+            <div class="col-4">
+                <div class="input-group mb-3">
+                    <div class="form-floating mb-3">
+                        @* <input name="search" type="search" class="form-control" placeholder="Search by No. Ket, Nama Pemotong"
+                               data-toggle="tooltip" data-placement="bottom" title="Search by Nomor Keterangan, Nama Pemotong"> *@
+                        <input type="search" name="search" class="form-control" id="floatingInput">
+                        <label for="floatingInput">Search No. Ket, Nama</label>
+                    </div>
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-secondary" type="submit">Search</button>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-5">
+                <div class="input-group">
+                    @* <input type="date" name="startdate" class="form-control">
+                    <input type="date" name="enddate" class="form-control"> *@
+                    <div class="form-floating mb-3">
+                        <input type="date" name="startdate" class="form-control" id="floatingInput">
+                        <label for="floatingInput"> Start Date</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="date" name="enddate" class="form-control" id="floatingInput">
+                        <label for="floatingInput"> End Date</label>
+                    </div>
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-secondary" type="submit">Filter</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-3 text-end">
+                <a class="btn btn-primary" onclick="TriggerExport()">
+                    <i class="bi bi-download"></i> Export
+                </a>
+                <a class="btn btn-danger" asp-area="" asp-controller="TrTaxes" asp-action="ViewExportExcel">
+                    <i class="bi bi-x-circle"></i> Clear
+                </a>
+            </div>
+            @* <div class="form-group">
+            <div class="col-2">
+            <input name="search" type="search" class="form-control" />
+            </div>
+            <div class="col-2">
+            <button type="submit" class="form-control">Search</button>
+            </div>
+            <div class="col-4 text-end">
+            <input name="search" type="search" class="form-control" />
+            <button type="submit" class="form-control">Search</button>
+            <a class="btn btn-outline-primary" asp-area="" asp-controller="TrTaxes" asp-action="UploadNewTax">
+            <i class="bi bi-upload"></i> Upload New Tax
+            </a>
+            </div>
+            </div> *@
+        </div>
+    </form>
+
+    <form asp-action="ExportExcel" asp-controller="TrTaxes" method="post">
+        <asp:Panel ID="inputPanel" runat="server">
+            <div class="table-wrapper table-responsive-lg mt-lg-4">
+                <table class="table" style="font-size:small">
+                    <thead>
+                        <tr>
+                            <th scope="col">
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="form-check-input checkbox" onclick="SwapCheck()"
+                                           id="checkAll" style="border: 1px solid;">
+                                    <label class="custom-control-label" for="customCheck1">All</label>
+                                </div>
+                            </th>
+                            <th scope="col">No. Bukti Potong</th>
+                            <th scope="col">Masa Pajak</th>
+                            <th scope="col">Dasar Pengenaan Pajak</th>
+                            <th scope="col">Tgl Keterangan</th>
+                            <th scope="col">No. Dokumen</th>
+                            <th scope="col">Nama Pemotong</th>
+                            <th scope="col">Tanggal Upload</th>
+                            <th scope="col">Ket. Kode Objek Pajak</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model != null)
+                        {
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td scope="col" width="50px">
+                                        <input type="checkbox" name="IsSelected" value="@item.Id|@item.NomorBuktiPotong|@item.NomorKet"
+                                               class="form-check-input checkbox" id="singleCheck" style="border: 1px solid;">
+                                    </td>
+                                    <td scope="col" width="50px">
+                                        @* <a asp-area="" data-toggle="tooltip" data-placement="bottom" title="View Details" asp-controller="TrTaxes" asp-action="ViewDetail" asp-route-id="@item.Id">
+                                @Html.DisplayFor(modelItem => item.NomorBuktiPotong)</a> *@
+                                        @item.NomorBuktiPotong
+                                    </td>
+                                    <td scope="col" width="60px">@Html.DisplayFor(modelItem => item.MasaPajak)</td>
+                                    <td scope="col" width="100px" id="dasarpajak">@item.DasarPengenaanPajak.ToString("#,###")</td>
+                                    <td scope="col" width="50px">@item.TanggalKet.ToString("dd-MMM-yy")</td>
+                                    <td scope="col" width="50px">@Html.DisplayFor(modelItem => item.NomorKet)</td>
+                                    <td scope="col" width="150px">@Html.DisplayFor(modelItem => item.NamaPemotong)</td>
+                                    <td scope="col" width="50px">@item.CreatedDate.ToString("dd-MMM-yy")</td>
+                                    <td scope="col" width="100px">@Html.DisplayFor(modelItem => item.KetKodeObjekPajak)</td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+                <button type="submit" id="triggerBtnExport" hidden></button>
+            </div>
+        </asp:Panel>
+    </form>
+</div>
+
+<script>
+    function SwapCheck() {
+        // find them
+        var allChecks = jQuery('input[type=checkbox]');
+
+        // $('#checkAll').click(function () {
+        //     if (this.checked) {
+        //         $('.custom-control-input').prop("checked");
+        //         $('#singleCheck').prop("checked");
+        //     }
+        // });
+        allChecks.each(function () {
+            if ($('#checkAll').prop("checked") == true) {
+                $('#checkAll').prop("checked", true);
+                jQuery(this).prop("checked", true);
+            }
+            else {
+                $('#checkAll').prop("checked", false);
+                jQuery(this).prop("checked", false);
+            }
+
+            // use this for jQuery ver 1.6 and before
+            // jQuery(this).attr("checked", !this.checked);
+        });
+    }
+
+    function TriggerExport() {
+        $("#triggerBtnExport").trigger("click");
+    }
+</script>
