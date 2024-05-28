@@ -50,7 +50,7 @@ namespace TaxForm.Controllers
         //{
         //    string tenantID = "7e08c45e-d069-48e9-b15b-4932b36a7d1c";
         //    string clientID = "50f1de76-6b37-4286-9397-f827096ca3de";
-        
+        //    string clientSecret = "N_r8Q~Nn~vm5IMOCo1DOsqdGXoJY1XIJbyXffawI";
         //    var userEmailLogin = User.Identity.Name;
         //    var scopes = new[] { "https://graph.microsoft.com/.default" };
         //    var credentials = new ClientSecretCredential(
