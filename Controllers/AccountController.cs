@@ -11,37 +11,12 @@ namespace TaxForm.Controllers
 {
     public class AccountController : Controller
     {
-        //private GraphServiceClient _graphServiceClient;
-
-        //public AccountController(GraphServiceClient graphServiceClient)
-        //{
-        //    _graphServiceClient = graphServiceClient;
-        //}
-
         public IActionResult Index()
         {
             return View();
         }
 
         public List<UserModel> users = null;
-        //public AccountController()
-        //{
-        //    users = new List<UserModel>();
-        //    users.Add(new UserModel()
-        //    {
-        //        UserId = 1,
-        //        Username = "stepanus.triatmaja",
-        //        Password = "Password1!",
-        //        Role = "Admin"
-        //    });
-        //    users.Add(new UserModel()
-        //    {
-        //        UserId = 2,
-        //        Username = "user1",
-        //        Password = "Password1!",
-        //        Role = "User"
-        //    });
-        //}
         public IActionResult Login(string ReturnUrl = "/")
         {
             LoginModel objLoginModel = new LoginModel();
@@ -79,11 +54,6 @@ namespace TaxForm.Controllers
             }
             return View(objLoginModel);
         }
-        //public async Task<IActionResult> LogOut()
-        //{
-        //    await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-        //    return LocalRedirect("/");
-        //}
 
         [HttpGet]
         public IActionResult LogOut()
@@ -103,10 +73,8 @@ namespace TaxForm.Controllers
             {
                 // Redirect to home page if the user is authenticated.
                 return Redirect("/MicrosoftIdentity/Account/SignIn");
-                //return RedirectToAction(nameof(AccountController.Index), "/");
             }
             return Redirect("/MicrosoftIdentity/Account/SignIn");
-            //return RedirectToAction(nameof(TrTaxesController.Index), "pathtoberedirectedto");
         }
     }
 }
