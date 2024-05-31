@@ -7,10 +7,6 @@
       "RelativeMoniker": "D:0:0:{ECC1A0FD-6C1C-465A-ABEA-B6001194A3ED}|TaxForm.csproj|solutionrelative:controllers\\trtaxescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{ECC1A0FD-6C1C-465A-ABEA-B6001194A3ED}|TaxForm.csproj|d:\\source\\repos\\taxform\\controllers\\accountcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{ECC1A0FD-6C1C-465A-ABEA-B6001194A3ED}|TaxForm.csproj|solutionrelative:controllers\\accountcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{ECC1A0FD-6C1C-465A-ABEA-B6001194A3ED}|TaxForm.csproj|d:\\source\\repos\\taxform\\views\\trtaxes\\confidentialdata.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{ECC1A0FD-6C1C-465A-ABEA-B6001194A3ED}|TaxForm.csproj|solutionrelative:views\\trtaxes\\confidentialdata.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
@@ -34,21 +30,8 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 0,
           "Children": [
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "AccountController.cs",
-              "DocumentMoniker": "D:\\source\\repos\\TaxForm\\Controllers\\AccountController.cs",
-              "RelativeDocumentMoniker": "Controllers\\AccountController.cs",
-              "ToolTip": "D:\\source\\repos\\TaxForm\\Controllers\\AccountController.cs",
-              "RelativeToolTip": "Controllers\\AccountController.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAEoAAABFAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-31T06:47:08.517Z",
-              "EditorCaption": ""
-            },
             {
               "$type": "Document",
               "DocumentIndex": 0,
@@ -57,14 +40,14 @@
               "RelativeDocumentMoniker": "Controllers\\TrTaxesController.cs",
               "ToolTip": "D:\\source\\repos\\TaxForm\\Controllers\\TrTaxesController.cs",
               "RelativeToolTip": "Controllers\\TrTaxesController.cs",
-              "ViewState": "AQIAAPUDAAAAAAAAAAAswO8DAAARAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAO8DAAARAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-05-31T06:45:14.674Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 1,
               "Title": "ConfidentialData.cshtml",
               "DocumentMoniker": "D:\\source\\repos\\TaxForm\\Views\\TrTaxes\\ConfidentialData.cshtml",
               "RelativeDocumentMoniker": "Views\\TrTaxes\\ConfidentialData.cshtml",
@@ -72,12 +55,11 @@
               "RelativeToolTip": "Views\\TrTaxes\\ConfidentialData.cshtml",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAUAAAAZAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-05-31T06:40:00.066Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-05-31T06:40:00.066Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 2,
               "Title": "_Layout.cshtml",
               "DocumentMoniker": "D:\\source\\repos\\TaxForm\\Views\\Shared\\_Layout.cshtml",
               "RelativeDocumentMoniker": "Views\\Shared\\_Layout.cshtml",
@@ -85,12 +67,11 @@
               "RelativeToolTip": "Views\\Shared\\_Layout.cshtml",
               "ViewState": "AQIAABgAAAAAAAAAAAAAACMAAABbAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-05-31T04:27:01.823Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-05-31T04:27:01.823Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 4,
               "Title": "appsettings.json",
               "DocumentMoniker": "D:\\source\\repos\\TaxForm\\appsettings.json",
               "RelativeDocumentMoniker": "appsettings.json",
@@ -102,7 +83,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 3,
               "Title": "style.css",
               "DocumentMoniker": "D:\\source\\repos\\TaxForm\\wwwroot\\css\\style.css",
               "RelativeDocumentMoniker": "wwwroot\\css\\style.css",
