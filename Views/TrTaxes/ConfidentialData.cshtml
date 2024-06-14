@@ -1,0 +1,9 @@
+﻿@if (User.Identity.IsAuthenticated)
+{
+    <table>
+        @foreach (var item in User.Claims)
+        {
+            <tr><td>@item.Type</td><td>@item.Value</td></tr>
+        }
+    </table>
+}

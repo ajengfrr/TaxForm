@@ -1,0 +1,147 @@
+﻿@model TaxForm.Models.TaxFilesModel
+
+@{
+    ViewData["Title"] = "Upload New Tax";
+    // Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@{
+    if (ViewBag.Message != null)
+    {
+        var tes = ViewBag.Message.Split('~');
+        for (int i = 0; i < tes.Length; i++)
+        {
+            if (@tes[i] != "")
+            {
+                <p class="alert alert-info"> <strong>Info! </strong>@tes[i]</p>
+            }
+        }
+    
+    }
+}
+
+<div class="container">
+    <asp:Panel ID="inputPanel" runat="server">
+        <fieldset>
+            <div class="row mt-lg-3">
+                <div class="col-5">
+                    <a class="btn btn-outline-secondary" asp-area="" asp-controller="TrTaxes" asp-action="Index">
+                        <i class="bi bi-arrow-left-circle"></i> Back
+                    </a>
+                </div>
+               @*  <div class="col-4">
+                    <span>
+                        <b style="font-size:25px">
+                            Upload New Tax
+                        </b>
+                    </span>
+                </div> *@
+            </div>
+        </fieldset>
+    </asp:Panel>
+    <br />
+    <div class="card">
+        <h2 class="card-title text-center"><b>Upload Tax Files</b></h2>
+        <hr />
+        <div class="card-body">
+        <asp:Panel ID="inputPanel" runat="server">
+        <fieldset>
+                    <form asp-action="MultiUpload" onsubmit="loading()" asp-controller="TrTaxes" method="post" enctype="multipart/form-data">
+                <div class="row mt-lg-2">
+                    <div class="col-9">
+                        <label class="col-form-label">Select Multiple Files</label>
+                        <input asp-for="Files" accept=".pdf" name="files" id="files" class="form-control" multiple />
+                        <span asp-validation-for="Files" class="text-danger"></span>
+                    </div>
+                    <br />
+                    <div class="col-3 text-end align-self-end">
+                        <button type="submit" class="btn btn-success">OCR Scan</button>
+                        <a id="clearFiles" onclick="clearFiles()" class="btn btn-danger" tooltip="asd">Clear</a>
+                    </div>
+                </div>
+            </form>
+        </fieldset>
+                <div id="myLoadingElement" style="display: none;">
+                    @* <div class="d-flex justify-content-center">
+                        <div class="spinner-border" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                    </div> *@
+                    <div class="modal fade show" id="verticalycentered" tabindex="-1" style="display: block;" aria-modal="true" role="dialog">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                
+                                <div class="modal-body">
+                                    <div class="d-flex justify-content-center">
+                                        <div class="spinner-border" role="status">
+                                            <span class="visually-hidden">Loading...</span>
+                                        </div>
+                                    </div> 
+                                </div>
+                               
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        <fieldset>
+            <div class="table-wrapper table-responsive-lg mt-lg-5">
+                @* @RenderSection("ListDataUpload") *@
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">File Name</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr id="selectedFiles">
+                        </tr>
+                        @* <tr>
+                        <td scope="col"></td>
+                        </tr> *@
+
+                    </tbody>
+                </table>
+            </div>
+        </fieldset>
+    </asp:Panel>
+</div>
+    </div>
+</div>
+
+<script>
+    var selDiv = "";
+
+    document.addEventListener("DOMContentLoaded", init, false);
+
+    function init() {
+        document.querySelector('#files').addEventListener('change', handleFileSelect, false);
+        selDiv = document.querySelector("tbody");
+    }
+
+    function handleFileSelect(e) {
+
+        if (!e.target.files) return;
+        document.createElement
+        selDiv.innerHTML = "";
+
+        var files = e.target.files;
+        for (var i = 0; i < files.length; i++) {
+            var f = files[i];
+            // selDiv.innerHTML +=  + f.name + "<br/>";
+            selDiv.innerHTML += "<tr>" + "<td scope=\"col\" >" + f.name + "</td>" + "</tr>";
+        }
+
+    }
+    function clearFiles() {
+        $('#files').val('');
+        selDiv.innerHTML = "";
+    }
+
+    function loading() {
+        $("#myLoadingElement").show();
+    }
+    // $("#myform").submit(function (e) {
+    //     $("#myLoadingElement").show();
+    // });
+</script> 
