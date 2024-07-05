@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -92,46 +92,46 @@ namespace TaxForm.Controllers
             var param = _context.MsParameterValues.FirstOrDefault(p => p.Title.Contains("Tax Form") && p.Parameter.Contains("Akses Semua Tax")
                       && p.AlphaNumericValue.ToLower().Contains(userEmail));
 
-            if (param != null)
+            if (param != null && search == null)
             {
-                if (search == null)
-                {
-                    return _context.TrTaxes != null ?
-                            View(await _context.TrTaxes.Where(t => t.Status.Equals(null)).OrderByDescending(t => t.Id).ToListAsync()) :
-                            Problem("Entity set 'TaxFormReaderContext.TrTaxes'  is null.");
-                }
-                else
-                {
-                    var tax = from t in _context.TrTaxes
-                              select t;
-                    tax = tax.Where(t => t.NomorKet.Contains(search) || t.NamaPemotong.Contains(search));
+                return _context.TrTaxes != null ?
+                        View(await _context.TrTaxes.Where(t => t.Status.Equals(null)).OrderByDescending(t => t.Id).ToListAsync()) :
+                        Problem("Entity set 'TaxFormReaderContext.TrTaxes'  is null.");
+                //if (search == null)
+                //{
+                //}
+            }
+            else if (param != null && search != null)
+            {
+                var tax = from t in _context.TrTaxes
+                          select t;
+                tax = tax.Where(t => t.NomorKet.Contains(search) || t.NamaPemotong.Contains(search));
 
-                    return _context.TrTaxes != null ?
-                            View(await tax.Where(t => t.Status.Equals(null)).OrderByDescending(t => t.Id).ToListAsync()) :
-                            Problem("Entity set 'TaxFormReaderContext.TrTaxes'  is null.");
-                }
+                return _context.TrTaxes != null ?
+                        View(await tax.Where(t => t.Status.Equals(null)).OrderByDescending(t => t.Id).ToListAsync()) :
+                        Problem("Entity set 'TaxFormReaderContext.TrTaxes'  is null.");
+            }
+            else if (param == null && search == null)
+            {
+                return _context.TrTaxes != null ?
+                        View(await _context.TrTaxes.Where(t => t.Status.Equals(null) && t.CreatedBy.ToLower().Equals(username))
+                        .OrderByDescending(t => t.Id).ToListAsync()) :
+                        Problem("Entity set 'TaxFormReaderContext.TrTaxes'  is null.");
+                //if (search == null)
+                //{
             }
             else
             {
-                if (search == null)
-                {
-                    return _context.TrTaxes != null ?
-                            View(await _context.TrTaxes.Where(t => t.Status.Equals(null) && t.CreatedBy.ToLower().Equals(username))
-                            .OrderByDescending(t => t.Id).ToListAsync()) :
-                            Problem("Entity set 'TaxFormReaderContext.TrTaxes'  is null.");
-                }
-                else
-                {
-                    var tax = from t in _context.TrTaxes
-                              select t;
-                    tax = tax.Where(t => t.NomorKet.Contains(search) || t.NamaPemotong.Contains(search));
+                var tax = from t in _context.TrTaxes
+                          select t;
+                tax = tax.Where(t => t.NomorKet.Contains(search) || t.NamaPemotong.Contains(search));
 
-                    return _context.TrTaxes != null ?
-                            View(await tax.Where(t => t.Status.Equals(null) && t.CreatedBy.ToLower().Equals(username))
-                            .OrderByDescending(t => t.Id).ToListAsync()) :
-                            Problem("Entity set 'TaxFormReaderContext.TrTaxes'  is null.");
-                }
+                return _context.TrTaxes != null ?
+                        View(await tax.Where(t => t.Status.Equals(null) && t.CreatedBy.ToLower().Equals(username))
+                        .OrderByDescending(t => t.Id).ToListAsync()) :
+                        Problem("Entity set 'TaxFormReaderContext.TrTaxes'  is null.");
             }
+            //}
         }
         [Authorize]
         public IActionResult UploadNewTax()
@@ -166,34 +166,34 @@ namespace TaxForm.Controllers
                     break;
                 }
             }
-            
+
             //var connectionString = configuration.GetConnectionString("TaxFormReaderConnection");
 
             //DbConnection db = new DbConnection();
             try
             {
                 if (model.Files != null)
-            {
-                if (model.Files.Count > 0)
                 {
-                    //foreach (var file in model.Files)
-                    //{
+                    if (model.Files.Count > 0)
+                    {
+                        //foreach (var file in model.Files)
+                        //{
 
-                    //    string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Files");
+                        //    string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Files");
 
-                    //    //create folder if not exist
-                    //    if (!Directory.Exists(path))
-                    //        Directory.CreateDirectory(path);
+                        //    //create folder if not exist
+                        //    if (!Directory.Exists(path))
+                        //        Directory.CreateDirectory(path);
 
 
-                    //    string fileNameWithPath = Path.Combine(path, DateTime.Now.ToString("dd-MM-yyyy_HH_mm_ss") + "_" + file.FileName);
+                        //    string fileNameWithPath = Path.Combine(path, DateTime.Now.ToString("dd-MM-yyyy_HH_mm_ss") + "_" + file.FileName);
 
-                    //    using (var stream = new FileStream(fileNameWithPath, FileMode.Create))
-                    //    {
-                    //        file.CopyTo(stream);
-                    //    }
-                    //}
-                   
+                        //    using (var stream = new FileStream(fileNameWithPath, FileMode.Create))
+                        //    {
+                        //        file.CopyTo(stream);
+                        //    }
+                        //}
+
                         foreach (var file in model.Files)
                         //for (int f = 0; f < model.Files.Count; f++)
                         {
@@ -424,7 +424,7 @@ namespace TaxForm.Controllers
                                         }
 
                                         #region AMOUNT
-                                        
+
                                         var amount = resultAmount[0].Replace(".", ",").Replace(",", ".")
                                                                     .Replace(" ", "").Replace("\n", "");
                                         var amount2 = resultAmount[1].Replace(".", ",").Replace(",", ".")
@@ -438,7 +438,9 @@ namespace TaxForm.Controllers
                                         var tempamount2 = amount2.Split('.');
                                         if (tempamount.First().Length == 4)
                                         {
-                                            amount = string.Concat(amount.Substring(2, amount.Length - 2));
+                                            var tes33 = amount.Length - 2;
+                                            var subs = amount.Substring(2, tes33);
+                                            amount = subs;
                                         }
                                         else if (tempamount.First().Length == 5)
                                         {
@@ -729,11 +731,11 @@ namespace TaxForm.Controllers
 
                                     if (taxs.Count > 0)
                                     {
-                                       
+
                                         ViewBag.Message = string.Concat(ViewBag.Message + "Nomor Bupot: " + tempTaxModel.NomorBuktiPotong +
                                                                                         " dengan Nomor Dokumen: " + tempTaxModel.NomorKet + " Sudah Ada~");
-                                        
-                                        
+
+
                                     }
                                     else
                                     {
@@ -745,7 +747,7 @@ namespace TaxForm.Controllers
                                 else
                                 {
                                     ViewBag.Message += "Isi File " + file.FileName + " tidak bisa berupa gambar/foto~";
-                                    
+
                                 }
                             }
 
@@ -753,14 +755,14 @@ namespace TaxForm.Controllers
 
                             #endregion
                         }
+                    }
+                    //return View("UploadNewTax", model);
                 }
-                //return View("UploadNewTax", model);
-            }
-            else
-            {
-                //return View("UploadNewTax", model);
-            }
-            
+                else
+                {
+                    //return View("UploadNewTax", model);
+                }
+
                 if (ModelState.IsValid)
                 {
                     //    //_context.Add(taxModels);
@@ -782,7 +784,7 @@ namespace TaxForm.Controllers
             }
 
             return View("UploadNewTax", model);
-            
+
         }
         [Authorize]
         public async Task<IActionResult> ViewExportExcel(string search, DateTime? startdate, DateTime? enddate)
@@ -806,7 +808,7 @@ namespace TaxForm.Controllers
                                   && p.AlphaNumericValue.ToLower().Contains(userEmail));
 
             if (param != null)
-            { 
+            {
                 if (search == null && (start == null && end == null))
                 {
                     return _context.TrTaxes != null ?
@@ -915,7 +917,7 @@ namespace TaxForm.Controllers
                             .FirstOrDefault();
                         //var item = tax.ElementAt(index - 1);
                         shBupot.Cell(5 + index, 1).Value = index;
-                        shBupot.Cell(5 + index, 2).Value = item.NamaPemotong;
+                        shBupot.Cell(5 + index, 2).Value = item != null ? item.NamaPemotong : "";
                         shBupot.Cell(5 + index, 3).Value = item.Npwp;
                         shBupot.Cell(5 + index, 4).Value = item.KetKodeObjekPajak;
                         shBupot.Cell(5 + index, 5).Value = item.KodeObjekPajak;
@@ -993,50 +995,50 @@ namespace TaxForm.Controllers
 
             //if (ModelState.IsValid)
             //{
-                try
-                {
-                    //_context.TrTaxes.Entry(trTax).Property(x => x.ModifiedBy).CurrentValue = trTax.ModifiedBy;
-                    var tax = _context.TrTaxes.FirstOrDefault(s => s.Id.Equals(id));
+            try
+            {
+                //_context.TrTaxes.Entry(trTax).Property(x => x.ModifiedBy).CurrentValue = trTax.ModifiedBy;
+                var tax = _context.TrTaxes.FirstOrDefault(s => s.Id.Equals(id));
 
-                    if (tax != null)
-                    {
-                        tax.ModifiedBy = trTax.ModifiedBy;
-                        tax.ModifiedDate = trTax.ModifiedDate;
-                        tax.StatusPph = trTax.StatusPph;
-                        tax.MasaPajak = trTax.MasaPajak;
-                        tax.KetKodeObjekPajak = trTax.KetKodeObjekPajak;
-                        tax.KodeObjekPajak = trTax.KodeObjekPajak;
-                        tax.DasarPengenaanPajak = trTax.DasarPengenaanPajak;
-                        tax.NamaPemotong = trTax.NamaPemotong;
-                        tax.NomorBuktiPotong = trTax.NomorBuktiPotong;
-                        tax.NomorKet = trTax.NomorKet;
-                        tax.Npwp = trTax.Npwp;
-                        tax.Pphdipotong = trTax.Pphdipotong;
-                        tax.TanggalBuktiPotong = trTax.TanggalBuktiPotong;
-                        tax.TanggalKet = trTax.TanggalKet;
-                        tax.ModifiedDate = DateTime.Now;
-                        tax.ModifiedBy = username;
-                    }
-
-                    await _context.SaveChangesAsync();
-                    //ViewBag.Message = "Masuk IF";
-                    //_context.TrTaxes.Update(trTax);
-                    //await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
+                if (tax != null)
                 {
-                    DbUpdateConcurrencyException exec = new DbUpdateConcurrencyException();
-                    //ViewBag.Message = "Error: " + exec.Message;
-                    if (!TrTaxExists(trTax.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
+                    tax.ModifiedBy = trTax.ModifiedBy;
+                    tax.ModifiedDate = trTax.ModifiedDate;
+                    tax.StatusPph = trTax.StatusPph;
+                    tax.MasaPajak = trTax.MasaPajak;
+                    tax.KetKodeObjekPajak = trTax.KetKodeObjekPajak;
+                    tax.KodeObjekPajak = trTax.KodeObjekPajak;
+                    tax.DasarPengenaanPajak = trTax.DasarPengenaanPajak;
+                    tax.NamaPemotong = trTax.NamaPemotong;
+                    tax.NomorBuktiPotong = trTax.NomorBuktiPotong;
+                    tax.NomorKet = trTax.NomorKet;
+                    tax.Npwp = trTax.Npwp;
+                    tax.Pphdipotong = trTax.Pphdipotong;
+                    tax.TanggalBuktiPotong = trTax.TanggalBuktiPotong;
+                    tax.TanggalKet = trTax.TanggalKet;
+                    tax.ModifiedDate = DateTime.Now;
+                    tax.ModifiedBy = username;
                 }
-                //return RedirectToAction(nameof(Index));
+
+                await _context.SaveChangesAsync();
+                //ViewBag.Message = "Masuk IF";
+                //_context.TrTaxes.Update(trTax);
+                //await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                DbUpdateConcurrencyException exec = new DbUpdateConcurrencyException();
+                //ViewBag.Message = "Error: " + exec.Message;
+                if (!TrTaxExists(trTax.Id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+            //return RedirectToAction(nameof(Index));
             //}
             //else
             //{
@@ -1047,7 +1049,7 @@ namespace TaxForm.Controllers
 
         [Authorize]
         [HttpPost]
-        public async Task<IActionResult> Delete (int id, string DocumentId, string Remarks, 
+        public async Task<IActionResult> Delete(int id, string DocumentId, string Remarks,
             [Bind("DocumentId, Id, Remarks")] TrTax trTax)
         {
             var userLogin = User.Claims.ToList();
